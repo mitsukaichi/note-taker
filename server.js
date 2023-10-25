@@ -47,7 +47,7 @@ app.post("/api/notes", function(req, res) {
     newNotes.title = req.body.title;
     newNotes.text = req.body.text;
     noteData.push(newNotes);
-    fs.writeFile('./db/db.json',JSON.stringify(noteData),(err) =>
+    fs.writeFile('./db/db.json',JSON.stringify(noteData, null, 4),(err) =>
       err ? console.error(err) : console.log(noteData));
     // append the added task to the `db.json` file,
     res.json(noteData);
@@ -66,7 +66,7 @@ app.delete("/api/notes/:id", function(req, res) {
             break;
         };
     }
-    fs.writeFile('./db/db.json',JSON.stringify(noteData),(err) =>
+    fs.writeFile('./db/db.json',JSON.stringify(noteData, null, 4),(err) =>
       err ? console.error(err) : console.log(noteData));
     res.json(noteData);
 });
