@@ -134,6 +134,8 @@ const renderNoteList = async (notes) => {
     noteList.forEach((el) => (el.innerHTML = ''));
   }
 
+  console.log(renderNoteList);
+
   let noteListItems = [];
 
   // Returns HTML element with or without a delete button
