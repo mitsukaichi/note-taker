@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const generateUniqueId = require('generate-unique-id');
 let noteData = require("./db/db.json");
-const PORT = 3000; //placeholder until this is deployed in Heroku
+const PORT = process.env.PORT || 3001;
 
 // Sets up the Express App
 // =============================================================
@@ -48,7 +48,7 @@ app.post("/api/notes", function(req, res) {
     newNotes.text = req.body.text;
     noteData.push(newNotes);
     fs.writeFile('./db/db.json',JSON.stringify(noteData, null, 4),(err) =>
-      err ? console.error(err) : console.log(noteData));
+      err ? console.error(err) : console.log(`Successfully added a new note`));
     // append the added task to the `db.json` file,
     res.json(noteData);
 });
@@ -57,17 +57,14 @@ app.post("/api/notes", function(req, res) {
 
 app.delete("/api/notes/:id", function(req, res) {
     let deleteId = req.params.id;
-    console.log("deleteId: "+ deleteId);
     for (let i = 0; i < noteData.length; i++){
-        console.log("noteData[i].id "+ noteData[i].id);
         if (noteData[i].id === deleteId) {
             noteData.splice(i,1);
-            console.log(noteData);
             break;
         };
     }
     fs.writeFile('./db/db.json',JSON.stringify(noteData, null, 4),(err) =>
-      err ? console.error(err) : console.log(noteData));
+      err ? console.error(err) : console.log(`Successfully deleted the note`));
     res.json(noteData);
 });
 
